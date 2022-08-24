@@ -1,11 +1,37 @@
-# node-wordcloud
+# node-wordcloud ![npm version](https://img.shields.io/npm/v/node-wordcloud.svg) 
 
 Tag cloud presentation for NodeJS (Based on [wordcloud2.js](https://github.com/timdream/wordcloud2.js))
+
+
 
 ## Installation
 
 ```bash
 npm install node-wordcloud
+```
+
+## Usage
+
+```javascript
+const { createCanvas } = require('canvas');
+const WordCloud = require('node-wordcloud')();
+
+const canvas = createCanvas(500, 500);
+
+// Array of words [text: String, weight: Number][]
+// The weight of word isn't the absolute size of word, the real size will be automatically calculated based on options.sizeRange
+const list = [['word', 150], ['hello', 140], ['world', 130], ['test', 90]];
+
+const wordcloud = WordCloud(canvas, { list });
+
+// you should call draw() to draw the wordcloud manually
+wordcloud.draw();
+
+const buffer = canvas.toBuffer();
+
+// you can use the wordcloud.updateList() to update the word list
+// wordcloud.updateList([['word', 150], ['hello', 140], ['world', 130], ['test', 90]]);
+// wordcloud.draw();
 ```
 
 ## Example
@@ -14,7 +40,7 @@ See [example](./example) folder for more examples.
 
 ## Options
 
-Support most of options of [wordcloud2.js](https://github.com/timdream/wordcloud2.js), but some options are not supported:
+Support most of options of [wordcloud2.js](https://github.com/timdream/wordcloud2.js), except for:
 
 - `clearCanvas`
 - `weightFactor`
@@ -42,7 +68,7 @@ This module will not draw word cloud automatically, you need to call `wordcloud.
 
 You can use `wordcloud.updateList(list: Array<[text: String, weight: Number]>)` to update word list. See example for more details.
 
-In `wordcloud2.js`, you can import module like `const WordCloud = require('wordcloud2')`, but in node-wordcloud, you need to import module like `const WordCloud = require('node-wordcloud')()`, you can choose the canvas implementation you want to use by passing `createCanvas` function, here here some examples:
+In `wordcloud2.js`, you can import module by `const WordCloud = require('wordcloud2')`, but in node-wordcloud, it will be `const WordCloud = require('node-wordcloud')()`, you can choose the canvas implementation you want to use by passing `createCanvas` function, here here some examples:
 
 ```javascript
 // use node-canvas default
