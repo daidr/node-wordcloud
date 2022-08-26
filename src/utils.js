@@ -1,8 +1,13 @@
 const NumberLinearMap = (value, valueExtent, sizeRange) => {
     const [min, max] = valueExtent
     const [minSize, maxSize] = sizeRange
-    const scale = (max - min) / (maxSize - minSize)
-    return minSize + (value - min) / scale
+    if (min != max) {
+        const scale = (max - min) / (maxSize - minSize)
+        return minSize + (value - min) / scale
+    } else {
+        return minSize
+    }
+
 }
 
 const getDataValueExtent = data => {
